@@ -37,7 +37,7 @@ mail = Mail(app)
 
 
 # --- Running the application + linking to html file ---
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["POST"])
 def index():
     if request.method == "POST":
         first_name = request.form["first_name"]
