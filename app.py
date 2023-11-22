@@ -48,6 +48,8 @@ def index():
         db.session.add(form)
         db.session.commit()
 
+        flash(f"Hi {first_name}, your message was submitted successfully!", "success")
+
     return render_template("index.html")
 
 
