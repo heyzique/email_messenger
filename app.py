@@ -21,19 +21,19 @@ app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USERNAME"] = "haziqdanial.hyde@gmail.com"
 app.config["MAIL_PASSWORD"] = "gbbh vluu xwqu wbvm"
 
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 mail = Mail(app)
 
 
 # Data Base Model with field specifications
-class Form(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(80))
-    last_name = db.Column(db.String(80))
-    email = db.Column(db.String(80))
-    date = db.Column(db.Date)
-    purpose = db.Column(db.String(80))
-    messages = db.Column(db.String(500))
+#class Form(db.Model):
+#    id = db.Column(db.Integer, primary_key=True)
+#    first_name = db.Column(db.String(80))
+#    last_name = db.Column(db.String(80))
+#    email = db.Column(db.String(80))
+#    date = db.Column(db.Date)
+#    purpose = db.Column(db.String(80))
+#    messages = db.Column(db.String(500))
 
 
 # --- Running the application + linking to html file ---
@@ -51,12 +51,12 @@ def index():
         print(first_name, last_name, email, date, purpose, messages)
 
         # Creating variables to store user input
-        form = Form(first_name=first_name, last_name=last_name,
-                    email=email, date=date_obj, purpose=purpose, messages=messages)
+        #form = Form(first_name=first_name, last_name=last_name,
+        #            email=email, date=date_obj, purpose=purpose, messages=messages)
 
         # Updating variables to the db session and committing to db
-        db.session.add(form)
-        db.session.commit()
+        #db.session.add(form)
+        #db.session.commit()
 
         message_body = f"<NO REPLY>\n\nDate: {date}\nThank you for taking the time to write me a message, {first_name}!\n\n" \
                        f"Here are the details submitted. \nName: {first_name} {last_name}\nPurpose: {purpose} " \
@@ -90,5 +90,5 @@ def index():
 # & run app on local terminal
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()
+        #db.create_all()
         app.run(debug=True, port=5001)
