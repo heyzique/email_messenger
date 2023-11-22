@@ -34,10 +34,20 @@ def index():
         last_name = request.form["last_name"]
         email = request.form["email"]
         date = request.form["date"]
+        date_obj = datetime.strptime(date, "%Y-%m-%d")
         purpose = request.form["purpose"]
         messages = request.form["messages"]
         print(request.method)
         print(first_name, last_name, email, date, purpose, messages)
+
+        # Creating variables to store user input
+        form = Form(first_name=first_name, last_name=last_name,
+                    email=email, date=date_obj, purpose=purpose, messages=messages)
+
+        # Updating variables to the db session and committing to db
+        db.session.add(form)
+        db.session.commit()
+
     return render_template("index.html")
 
 
