@@ -4,6 +4,8 @@ from datetime import datetime
 
 # Library to connect to database using flask
 from flask_sqlalchemy import SQLAlchemy
+# Library to send email
+from flask_mail import Mail, Message
 
 # Instances
 app = Flask(__name__)
@@ -12,7 +14,15 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "sendmessage123"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
 
+# Mail Config (GMAIL)
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = "haziqdanial.hyde@gmail.com"
+app.config["MAIL_PASSWORD"] = "gbbh vluu xwqu wbvm"
+
 db = SQLAlchemy(app)
+mail = Mail(app)
 
 
 # Data Base Model with field specifications
@@ -48,6 +58,29 @@ def index():
         db.session.add(form)
         db.session.commit()
 
+        message_body = f"<NO REPLY>\n\nDate: {date}\nThank you for taking the time to write me a message, {first_name}!\n\n" \
+                       f"Here are the details submitted. \nName: {first_name} {last_name}\nPurpose: {purpose} " \
+                       "\n\nI will get back to you soon. Hope you have a blessed day!\n\n " \
+                       "<NO REPLY: Please do not reply to this email!>"
+
+        ownmessage_body = "You just recieved a message from EMAIL MESSENGER!\n\n" \
+                          f"Sender Name: {first_name} {last_name}\nSender Email: {email}\nPurpose: {purpose}\n" \
+                          f"Message: {messages}"
+
+        clientmessage = Message(subject="Your Message Submitted Successfully!",
+                          sender=app.config["MAIL_USERNAME"],
+                          recipients=[email],
+                          body=message_body)
+
+        ownmessage = Message(subject="PYTHON EMAIL MESSENGER NOTIFICATION",
+                          sender=app.config["MAIL_USERNAME"],
+                          recipients=["hey.zique@gmail.com"],
+                          body=ownmessage_body)
+
+        mail.send(clientmessage)
+        mail.send(ownmessage)
+
+        # Flash Notification function
         flash(f"Hi {first_name}, your message was submitted successfully!", "success")
 
     return render_template("index.html")
