@@ -8,4 +8,4 @@ The web app uses flask to create the application, create/connect to a SQLite DB 
 Bootstrap classes was used to design the page. 
 Lastly after submission, the web app will send a confirmation email to the sender as well as the main admin.
 
-Feel free to try out the webapp: 1704903b.pythonanywher.com
+Feel free to try out the webapp: 1704903b.pythonanywhere.com
